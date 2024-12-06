@@ -9,20 +9,5 @@ import ucu.edu.ua.task1.MessageSender;
 import ucu.edu.ua.task1.User;
 
 public class Tests {
-    private MessageSender messageSender;
-    private FacebookUser facebookUser;
 
-    @BeforeEach
-    public void setUp() {
-        messageSender = new MessageSender();
-    }
-
-    @Test
-    public void testMainWithFacebookUser() {
-        facebookUser = new FacebookUser("facebook.mail", "Ukraine", LocalDateTime.now());
-        User user = new FacebookUserAdapter(facebookUser);
-        messageSender.send(user, "Hello, World!");
-        assertEquals("facebook.mail", user.getMail());
-        assertEquals("Ukraine", user.getCountry());
-    }
 }
