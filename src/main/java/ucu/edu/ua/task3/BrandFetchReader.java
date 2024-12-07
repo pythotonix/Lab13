@@ -28,6 +28,6 @@ public class BrandFetchReader {
         HttpResponse<String> response = httpClient.send(httpRequest, BodyHandlers.ofString());
         System.out.println(response.body());
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(response.body(), Company.class);;
+        return objectMapper.readValue(response.body(), Company.class);
     }
 }

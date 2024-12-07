@@ -9,5 +9,20 @@ import ucu.edu.ua.task1.MessageSender;
 import ucu.edu.ua.task1.User;
 
 public class Tests {
+    private User user;
+    private FacebookUser facebookUser;
+    private FacebookUserAdapter facebookUserAdapter;
 
+    @BeforeEach
+    public void setUp() {
+        facebookUser = new FacebookUser("facebook.mail", "Ukraine", LocalDateTime.now());
+        facebookUserAdapter = new FacebookUserAdapter(facebookUser);
+    }
+
+    @Test
+    public void testFacebookUserAdapter() {
+        assertEquals(facebookUserAdapter.getMail(), facebookUser.getEmail());
+        assertEquals(facebookUserAdapter.getCountry(), facebookUser.getCountry());
+        assertEquals(facebookUserAdapter.getActiveTime(), facebookUser.getActiveTime());
+    }
 }
