@@ -22,4 +22,8 @@ public class FacebookUser {
     public LocalDateTime getUserActiveTime() {
         return activeTime;
     }
+
+    public String toString() {
+        return "FacebookUser(email=" + email + ", country=" + country +")";
+    }
 }

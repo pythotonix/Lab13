@@ -1,5 +1,8 @@
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,17 +15,30 @@ public class Tests {
     private User user;
     private FacebookUser facebookUser;
     private FacebookUserAdapter facebookUserAdapter;
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
 
     @BeforeEach
     public void setUp() {
         facebookUser = new FacebookUser("facebook.mail", "Ukraine", LocalDateTime.now());
         facebookUserAdapter = new FacebookUserAdapter(facebookUser);
+        System.setOut(new PrintStream(outContent));
     }
 
     @Test
-    public void testFacebookUserAdapter() {
-        assertEquals(facebookUserAdapter.getMail(), facebookUser.getEmail());
-        assertEquals(facebookUserAdapter.getCountry(), facebookUser.getCountry());
-        assertEquals(facebookUserAdapter.getActiveTime(), facebookUser.getActiveTime());
+    public void testFacebookUserAdapterSend() {
+        MessageSender messageSender = new MessageSender();
+        messageSender.send(facebookUserAdapter, "Hello, World!");
+        String actual = outContent.toString();
+        assertEquals("Sending message to FacebookUser(email=facebook.mail, country=Ukraine)\r\n" + //
+                        "Message content: Hello, World!\r\n", actual);
+
+    }
+
+    
+
+    @AfterEach
+    public void restoreStreams() {
+        System.setOut(originalOut);
     }
 }
